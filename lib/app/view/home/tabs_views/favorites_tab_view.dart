@@ -1,28 +1,25 @@
-import 'package:ebooksreader/app/api/api_class_status.dart';
-import 'package:ebooksreader/app/api/http_impl/api_http_impl.dart';
-import 'package:ebooksreader/app/api/usecase/get_all_books_usecase.dart';
+import 'package:ebooksreader/app/features/favorites/favorites_interface.dart';
 import 'package:ebooksreader/app/model/book_model.dart';
 import 'package:ebooksreader/app/view/custom_widgets/book_item_list_widget.dart';
+import 'package:ebooksreader/get_it/locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:multiple_result/multiple_result.dart';
 
-class EstanteTabView extends StatefulWidget {
-  const EstanteTabView({super.key});
+class FavoritesTabView extends StatefulWidget {
+  const FavoritesTabView({super.key});
 
   @override
-  State<EstanteTabView> createState() => _EstanteTabViewState();
+  State<FavoritesTabView> createState() => _FavoritesTabViewState();
 }
 
-class _EstanteTabViewState extends State<EstanteTabView> {
+class _FavoritesTabViewState extends State<FavoritesTabView> {
   @override
   Widget build(BuildContext context) {
-    print("deu build");
     return FutureBuilder(
-        future: GetAllBooks(repository: BookApiHttpImpl()).fetchAll(),
+        future: getIt<IFavorites>().getAllFavorites(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return showEstante(snapshot);
+            return showEstante(snapshot.data as List<Book>);
           } else if (snapshot.hasError) {
             if (kDebugMode) {
               print("erro: ${snapshot.error}");
@@ -35,11 +32,8 @@ class _EstanteTabViewState extends State<EstanteTabView> {
         });
   }
 
-  Widget showEstante(
-      AsyncSnapshot<Result<List<Book>, ApiStatusError>> snapshot) {
-    List<Book>? booksList = snapshot.data?.tryGetSuccess();
-
-    if (booksList != null && booksList.isNotEmpty) {
+  Widget showEstante(List<Book> booksList) {
+    if (booksList.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         child: GridView.builder(

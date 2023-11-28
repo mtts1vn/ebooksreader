@@ -2,9 +2,10 @@ import 'package:ebooksreader/app/database/database_interface.dart';
 import 'package:ebooksreader/app/features/favorites/favorites_interface.dart';
 import 'package:ebooksreader/app/model/book_model.dart';
 import 'package:ebooksreader/get_it/locator.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
-class SqfliteFavoritesImpl implements IFavorites {
+class SqfliteFavoritesImpl extends ChangeNotifier implements IFavorites {
   Database database = getIt<IDatabase>().getConnection();
 
   @override
@@ -12,14 +13,14 @@ class SqfliteFavoritesImpl implements IFavorites {
     await database.insert(
       'FavoriteBooks',
       {
-        'id': book.id,
         'title': book.title,
         'author': book.author,
         'coverUrl': book.coverUrl,
         'downloadUrl': book.downloadUrl,
       },
-      conflictAlgorithm: ConflictAlgorithm.ignore,
     );
+
+    notifyListeners();
   }
 
   @override
@@ -39,5 +40,27 @@ class SqfliteFavoritesImpl implements IFavorites {
       where: 'title = ? AND author = ?',
       whereArgs: [book.title, book.author],
     );
+
+    notifyListeners();
+  }
+
+  @override
+  Future<List<Book>> getAllFavorites() async {
+    final List<Map<String, dynamic>> result =
+        await database.query("FavoriteBooks");
+
+    List<Book> favorites = result
+        .map(
+          (e) => Book(
+            id: e["id"],
+            title: e["title"],
+            author: e["author"],
+            coverUrl: e["coverUrl"],
+            downloadUrl: e["downloadUrl"],
+          ),
+        )
+        .toList();
+
+    return favorites;
   }
 }

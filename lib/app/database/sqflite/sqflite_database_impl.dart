@@ -1,7 +1,6 @@
 import 'package:ebooksreader/app/database/database_interface.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common/sqlite_api.dart';
 
 class SqfliteDatabaseImpl extends IDatabase {
   late Database _connection;
