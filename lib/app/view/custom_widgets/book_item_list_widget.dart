@@ -54,18 +54,39 @@ class _BookItemState extends State<BookItem> {
                       onPressed: () async {
                         if (!await getIt<IFavorites>()
                             .checkIfExistsInFavorites(widget.book)) {
-                          getIt<IFavorites>().addToFavorites(widget.book);
+                          setState(() {
+                            getIt<IFavorites>().addToFavorites(widget.book);
+                          });
                           Snackbar.showSnackbar(
                               context, "Adicionado aos favoritos!");
                         } else {
-                          getIt<IFavorites>().removeFromFavorites(widget.book);
+                          setState(() {
+                            getIt<IFavorites>()
+                                .removeFromFavorites(widget.book);
+                          });
                           Snackbar.showSnackbar(
                               context, "Removido dos favoritos!");
                         }
                       },
-                      icon: Icon(
-                        Icons.bookmark_rounded,
-                        color: Colors.grey[700],
+                      icon: FutureBuilder(
+                        future: getIt<IFavorites>()
+                            .checkIfExistsInFavorites(widget.book),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            if (snapshot.data as bool) {
+                              return Icon(
+                                Icons.bookmark_rounded,
+                                color: Colors.red[700],
+                              );
+                            } else {
+                              return Icon(
+                                Icons.bookmark_rounded,
+                                color: Colors.grey[700],
+                              );
+                            }
+                          }
+                          return Container();
+                        },
                       ),
                     ),
                   ),
