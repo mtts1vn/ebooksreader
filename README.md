@@ -1,16 +1,21 @@
-# ebooksreader
+# EBooksReader
 
-A new Flutter project.
+Aplicativo desenvolvido em Flutter para a leitura de livros digitais.
 
-## Getting Started
+## Requisitos
+- Flutter: 3.16.0 ou superior
+- Dart: 3.2.0 ou superior
 
-This project is a starting point for a Flutter application.
+## Como baixar e usar
 
-A few resources to get you started if this is your first Flutter project:
+### Baixar o projeto
+Para baixar o projeto, basta clonar este repositório usando o comando:
+```
+git clone https://github.com/mtts1vn/ebooksreader
+```
+no seu terminal. Certifique-se de ter o Git instalado.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Baixar o apk
+Para baixar o arquivo APK da versão atual deste projeto, navegue até o diretório *lib/apk_para_testes/*. Lá, você encontrará o arquivo APK. Após isso, basta clicar no botão de download do próprio GitHub, e o download será feito.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Clique [aqui](https://github.com/mtts1vn/ebooksreader/blob/main/lib/apk_para_testes/ebooksreader.apk) para ir para o arquivo APK instantaneamente.
