@@ -3,6 +3,7 @@ import 'package:ebooksreader/app/api/http_impl/api_http_impl.dart';
 import 'package:ebooksreader/app/api/usecase/get_all_books_usecase.dart';
 import 'package:ebooksreader/app/model/book_model.dart';
 import 'package:ebooksreader/app/view/custom_widgets/book_item_list_widget.dart';
+import 'package:ebooksreader/app/view/custom_widgets/error_popup_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:multiple_result/multiple_result.dart';
@@ -23,11 +24,27 @@ class _EstanteTabViewState extends State<EstanteTabView>
         future: GetAllBooks(repository: BookApiHttpImpl()).fetchAll(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return showEstante(snapshot);
+            if (snapshot.data is Success) {
+              return showEstante(snapshot);
+            } else {
+              return ErrorPopup(
+                errorMessage: "Ocorreu algum problema, tente novamente ;)",
+                onRetry: () {
+                  setState(() {});
+                },
+              );
+            }
           } else if (snapshot.hasError) {
             if (kDebugMode) {
               print("erro: ${snapshot.error}");
             }
+
+            return ErrorPopup(
+              errorMessage: "Não foi possível carregar os livros",
+              onRetry: () {
+                setState(() {});
+              },
+            );
           }
 
           return const Center(
