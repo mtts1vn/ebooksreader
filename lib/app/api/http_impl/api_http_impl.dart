@@ -6,12 +6,12 @@ import 'package:http/http.dart';
 import 'package:multiple_result/multiple_result.dart';
 
 class BookApiHttpImpl implements IBookApi {
-  String _apiBooksUrl = "https://escribo.com/books.json";
+  String apiBooksUrl = "https://escribo.com/books.json";
 
   @override
   Future<Result<ApiStatusSuccess, ApiStatusError>> getAllBooks() async {
     Response requestResponse = await get(
-      Uri.parse(_apiBooksUrl),
+      Uri.parse(apiBooksUrl),
       headers: {"content-type": "application/json; charset=utf-8"},
     );
 

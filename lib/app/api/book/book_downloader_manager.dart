@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
+import 'package:ebooksreader/app/api/book/open_book_to_read.dart';
 import 'package:flutter/material.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:ebooksreader/app/features/download/download_interface.dart';
@@ -42,11 +43,13 @@ class BookDownloadManager {
 
       if (result is Success) {
         Snackbar.showSnackbar(context, "Baixado!");
+        OPenBookToRead.openBook(context, filePath);
       } else {
         Snackbar.showSnackbar(context, "Não foi possível baixar");
       }
     } else {
       Snackbar.showSnackbar(context, "Abrindo Livro...");
+      OPenBookToRead.openBook(context, filePath);
     }
   }
 }

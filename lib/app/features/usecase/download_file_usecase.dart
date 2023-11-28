@@ -14,8 +14,6 @@ class DownloadFileUsecase {
     Result<DownloadStatusSuccess, DownloadStatusError> result =
         await repository.downloadAndSave(fileName, fileExtension, fileUrl);
 
-    print("Result download: $result");
-
     return result.when(
       (success) => Result.success(success),
       (error) => Result.error(error),

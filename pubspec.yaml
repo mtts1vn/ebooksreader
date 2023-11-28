@@ -39,6 +39,8 @@ dependencies:
   multiple_result: ^5.1.0
   path_provider: ^2.1.1
   vocsy_epub_viewer: ^2.0.0
+  sqflite: ^2.3.0
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
